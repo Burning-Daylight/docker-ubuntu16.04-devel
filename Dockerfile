@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y build-essential cmake \
   git qt5-default libqt5serialport5-dev qtmultimedia5-dev libboost-all-dev libcaf-dev libeigen3-dev
 
 #install libraries from github/sourceforge
-RUN export BUILDDIR=$(mktemp -d -t build-XXXX); \ cd "${BUILDDIR}"; \
+RUN export BUILDDIR=$(mktemp -d -t build-XXXX); cd "${BUILDDIR}"; \
   git clone -b experimental https://git.code.sf.net/p/pteros/code pteros; \
   cd "${BUILDDIR}/pteros"; rm -rf build; mkdir build; cd build; \
   cmake -DSTANDALONE_PLUGINS=OFF -DUSE_OPENMP=OFF -DPYTHON_BINDINGS=OFF \
