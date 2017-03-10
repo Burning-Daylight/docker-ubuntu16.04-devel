@@ -26,3 +26,6 @@ RUN cd "${BUILDDIR}"; git clone https://github.com/cameron314/readerwriterqueue.
   cd readerwriterqueue; INCLUDE_INSTALL_DIR=/usr/local/include/; INSTALL_PREFIX=/opt/readerwriterqueue/; \
   sudo mkdir -p "${INSTALL_PREFIX}"; sudo cp readerwriterqueue.h atomicops.h "${INSTALL_PREFIX}"; \
   sudo ln -s "${INSTALL_PREFIX}" "${INCLUDE_INSTALL_DIR}/readerwriterqueue"
+
+#cleanup the build directory
+RUN rm -rf "${BUILDDIR}"
