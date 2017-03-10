@@ -1,8 +1,9 @@
 FROM ubuntu:16.04
 MAINTAINER Mykola Dimura <mykola.dimura@gmail.com> 
 
-RUN apt-get update && apt-get install -y build-essential cmake \
-  git qt5-default libqt5serialport5-dev qtmultimedia5-dev libboost-all-dev libcaf-dev libeigen3-dev
+RUN apt-get update && apt-get install -y build-essential cmake git qt5-default \
+  libqt5serialport5-dev qtmultimedia5-dev libboost-all-dev libcaf-dev libeigen3-dev \
+  python-numpy
 
 #install libraries from github/sourceforge
 RUN export BUILDDIR=$(mktemp -d -t build-XXXX); cd "${BUILDDIR}"; \
@@ -24,8 +25,8 @@ RUN cd "${BUILDDIR}"; git clone https://github.com/Amanieu/asyncplusplus.git asy
 
 RUN cd "${BUILDDIR}"; git clone https://github.com/cameron314/readerwriterqueue.git readerwriterqueue; \
   cd readerwriterqueue; INCLUDE_INSTALL_DIR=/usr/local/include/; INSTALL_PREFIX=/opt/readerwriterqueue/; \
-  sudo mkdir -p "${INSTALL_PREFIX}"; sudo cp readerwriterqueue.h atomicops.h "${INSTALL_PREFIX}"; \
-  sudo ln -s "${INSTALL_PREFIX}" "${INCLUDE_INSTALL_DIR}/readerwriterqueue"
+  mkdir -p "${INSTALL_PREFIX}"; cp readerwriterqueue.h atomicops.h "${INSTALL_PREFIX}"; \
+  ln -s "${INSTALL_PREFIX}" "${INCLUDE_INSTALL_DIR}/readerwriterqueue"
 
 #cleanup the build directory
 RUN rm -rf "${BUILDDIR}"
