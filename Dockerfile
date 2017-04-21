@@ -9,8 +9,7 @@ RUN apt-get update && apt-get install -y build-essential cmake git qt5-default \
 RUN export BUILDDIR=$(mktemp -d -t build-XXXX); cd "${BUILDDIR}"; \
   git clone -b experimental https://git.code.sf.net/p/pteros/code pteros; \
   cd "${BUILDDIR}/pteros"; rm -rf build; mkdir build; cd build; \
-  cmake -DSTANDALONE_PLUGINS=OFF -DUSE_OPENMP=OFF -DPYTHON_BINDINGS=OFF \
-  -DPOWERSASA=OFF -DMAKE_PACKAGE=ON -DCMAKE_BUILD_TYPE=Release ..; \
+  cmake -DEIGEN3_INCLUDE_DIR=/usr/include/eigen3 -DMAKE_PACKAGE=ON -DCMAKE_BUILD_TYPE=Release ..; \
   make package; dpkg -i pteros-*.deb
 
 RUN cd "${BUILDDIR}"; git clone https://github.com/efficient/libcuckoo.git libcuckoo; \
