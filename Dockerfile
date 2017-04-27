@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y build-essential cmake git qt5-default \
   libqt5serialport5-dev qtmultimedia5-dev libboost-all-dev libcaf-dev libeigen3-dev \
   python-numpy
 #add eigen to include dir to work around the bug in eigen3 package
-RUN sudo ln -s /usr/include/eigen3/Eigen /usr/local/include/Eigen
+RUN ln -s /usr/include/eigen3/Eigen /usr/local/include/Eigen
 
 #install libraries from github/sourceforge
 RUN export BUILDDIR=$(mktemp -d -t build-XXXX); cd "${BUILDDIR}"; \
