@@ -9,7 +9,7 @@ RUN ln -s /usr/include/eigen3/Eigen /usr/local/include/Eigen
 
 #install libraries from github/sourceforge
 RUN export BUILDDIR=$(mktemp -d -t build-XXXX); cd "${BUILDDIR}"; \
-  git clone -b experimental https://git.code.sf.net/p/pteros/code pteros; \
+  git clone https://github.com/yesint/pteros.git pteros; \
   cd "${BUILDDIR}/pteros"; rm -rf build; mkdir build; cd build; \
   cmake -DEIGEN3_INCLUDE_DIR=/usr/include/eigen3 -DMAKE_PACKAGE=ON -DCMAKE_BUILD_TYPE=Release ..; \
   make package; dpkg -i pteros-*.deb
