@@ -3,17 +3,17 @@ MAINTAINER Mykola Dimura <mykola.dimura@gmail.com>
 
 RUN apt-get update && apt-get install -y build-essential cmake git qt5-default \
   libqt5serialport5-dev qtmultimedia5-dev libboost-all-dev libcaf-dev libeigen3-dev \
-  python-numpy libspdlog-dev python-dev python3-dev python-pip python3-pip
+  python-numpy python-dev python3-dev python-pytest python3-pytest
 #add eigen to include dir to work around the bug in eigen3 package
 RUN ln -s /usr/include/eigen3/Eigen /usr/local/include/Eigen
 
-RUN pip install pybind11; \
-    pip3 install pybind11; \
-    pip install cppimport; \
-    pip3 install cppimport
-
-#install libraries from github/sourceforge
 RUN export BUILDDIR=$(mktemp -d -t build-XXXX); 
+
+RUN cd "${BUILDDIR}"; \
+    git clone https://github.com/pybind/pybind11.git; \
+    cd "${BUILDDIR}/pybind11"; rm -rf build; mkdir build; cd build; \
+    cmake -DPYBIND11_INSTALL=1 -DPYBIND11_TEST=0 ..; \
+    make install
 
 RUN cd "${BUILDDIR}"; \
   git clone https://github.com/yesint/pteros.git pteros; \
