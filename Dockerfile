@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:latest
 MAINTAINER Mykola Dimura <mykola.dimura@gmail.com> 
 
 RUN apt-get update && apt-get install -y build-essential cmake git qt5-default \
