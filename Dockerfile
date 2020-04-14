@@ -38,3 +38,6 @@ RUN cd "${BUILDDIR}"; git clone https://github.com/cameron314/readerwriterqueue.
 
 #cleanup the build directory
 RUN rm -rf "${BUILDDIR}"
+
+RUN mkdir -p /workdir
+WORKDIR /workdir
