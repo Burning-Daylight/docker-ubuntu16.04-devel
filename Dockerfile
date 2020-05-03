@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 MAINTAINER Mykola Dimura <mykola.dimura@gmail.com> 
 
-RUN apt-get update && apt-get install -y build-essential cmake git qt5-default \
+RUN apt-get update && apt-get install -y wget build-essential cmake git qt5-default \
   libqt5serialport5-dev qtmultimedia5-dev libboost-all-dev libcaf-dev libeigen3-dev \
   python-numpy python-dev python3-dev python-pytest python3-pytest libspdlog-dev libfmt-dev
 
