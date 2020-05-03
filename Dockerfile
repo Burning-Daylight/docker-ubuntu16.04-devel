@@ -39,14 +39,14 @@ RUN cd "${BUILDDIR}"; \
   make package; dpkg --force-all -i pteros-*.deb 
 
 RUN cd "${BUILDDIR}"; \
-  echo 'deb http://download.opensuse.org/repositories/home:/Luthaf/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/home:Luthaf.list
-  wget -nv https://download.opensuse.org/repositories/home:Luthaf/xUbuntu_18.04/Release.key -O Release.key
-  apt-key add - < Release.key
-  apt-get update
+  echo 'deb http://download.opensuse.org/repositories/home:/Luthaf/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/chemfiles.list \
+  wget -nv https://download.opensuse.org/repositories/home:Luthaf/xUbuntu_18.04/Release.key -O Release.key \
+  apt-key add - < Release.key \
+  apt-get update \
   apt-get install chemfiles
  
 #cleanup the build directory
-RUN rm -rf "${BUILDDIR}"
+RUN rm -rf "${BUILDDIR}"; apt-get clean;
 
 RUN mkdir -p /workdir
 WORKDIR /workdir
