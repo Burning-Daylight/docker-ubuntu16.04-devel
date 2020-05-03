@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:18.04
 MAINTAINER Mykola Dimura <mykola.dimura@gmail.com> 
 
 RUN apt-get update && apt-get install -y build-essential cmake git qt5-default \
@@ -16,12 +16,6 @@ RUN cd "${BUILDDIR}"; \
     cmake -DPYBIND11_INSTALL=1 -DPYBIND11_TEST=0 ..; \
     make install
 
-RUN cd "${BUILDDIR}"; \
-  git clone https://github.com/yesint/pteros.git pteros; \
-  cd "${BUILDDIR}/pteros"; rm -rf build; mkdir build; cd build; \
-  cmake -DEIGEN3_INCLUDE_DIR=/usr/include/eigen3 -DMAKE_PACKAGE=ON -DCMAKE_BUILD_TYPE=Release -DWITH_OPENBABEL=OFF -DWITH_GROMACS=OFF ..; \
-  make package; dpkg --force-all -i pteros-*.deb 
-
 RUN cd "${BUILDDIR}"; git clone https://github.com/efficient/libcuckoo.git libcuckoo; \
   cd libcuckoo; rm -rf build; mkdir build; cd build; \
   cmake -DBUILD_TESTS=1 -DBUILD_UNIVERSAL_BENCHMARK=1 -DCMAKE_BUILD_TYPE=Release .. ; \
@@ -37,6 +31,20 @@ RUN cd "${BUILDDIR}"; git clone https://github.com/cameron314/readerwriterqueue.
   mkdir -p "${INSTALL_PREFIX}"; cp readerwriterqueue.h atomicops.h "${INSTALL_PREFIX}"; \
   ln -s "${INSTALL_PREFIX}" "${INCLUDE_INSTALL_DIR}/readerwriterqueue"
 
+
+RUN cd "${BUILDDIR}"; \
+  git clone https://github.com/yesint/pteros.git pteros; \
+  cd "${BUILDDIR}/pteros"; rm -rf build; mkdir build; cd build; \
+  cmake -DEIGEN3_INCLUDE_DIR=/usr/include/eigen3 -DMAKE_PACKAGE=ON -DCMAKE_BUILD_TYPE=Release -DWITH_OPENBABEL=OFF -DWITH_GROMACS=OFF ..; \
+  make package; dpkg --force-all -i pteros-*.deb 
+
+RUN cd "${BUILDDIR}"; \
+  echo 'deb http://download.opensuse.org/repositories/home:/Luthaf/xUbuntu_18.04/ /' > /etc/apt/sources.list.d/home:Luthaf.list
+  wget -nv https://download.opensuse.org/repositories/home:Luthaf/xUbuntu_18.04/Release.key -O Release.key
+  apt-key add - < Release.key
+  apt-get update
+  apt-get install chemfiles
+ 
 #cleanup the build directory
 RUN rm -rf "${BUILDDIR}"
 
